@@ -17,7 +17,7 @@ This view allows you to edit the scenario using either the visual interface or a
 7. If you're in the editor click the Exit button (on top right)
 8. On the side menu pane click the button with two arrows collapsing labele integration.  Then click secrets
 9.  Grab web chat secret and app secret.
-10. Go to: https://github.com/microsoft/HealthBotContainerSample
+10. Go to: https://github.com/microsoft/HealthBotContainerSample/tree/webchat_v4
 11. Click Deploy to Azure
 12. Fill in the form (chose sub, RG, location)
 13. Once deployed go back to Azure Portal
