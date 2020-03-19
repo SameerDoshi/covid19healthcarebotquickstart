@@ -33,7 +33,8 @@ This view allows you to edit the scenario using either the visual interface or a
 23. Change value on line 87 to "covid19" (id of the scenario template)
 24. Remove args lines
 It should look like: 
-`    botConnection.postActivity({
+~~~~
+    botConnection.postActivity({
         type: "event",
         value: {
             trigger: "covid19",
@@ -41,14 +42,15 @@ It should look like:
         from: user,
         name: "TriggerScenario"
     }).subscribe(function(id) {});
-  `  
+~~~~ 
 
 25. Find website url on overview page of app service and Visit website.  (no restart required)
 25a.  Notice the text entry box at the bottom of your app?  If you don't like that then please add the following lines to index.js on the next line after the code you edited on above.
-`
-var shellInput = document.querySelector(".wc-console.has-upload-button");
-shellInput.parentNode.removeChild(shellInput);
-`
+~~~~
+   var shellInput = document.querySelector(".wc-console.has-upload-button");
+   shellInput.parentNode.removeChild(shellInput);
+~~~~
+
 26. Add the bot to your webstite using the steps [here](https://github.com/microsoft/HealthBot-WebChat)
 27. Now customize the template
 
