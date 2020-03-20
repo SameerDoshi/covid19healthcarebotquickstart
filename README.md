@@ -29,9 +29,8 @@ This view allows you to edit the scenario using either the visual interface or a
 19. Go to app service editor
 20. Edit wwwroot\public\index.js
 21. Replace contents of liens 55 and 72 with a space
-22. You're almost done!
-23. Change value on line 87 to "covid19" (or whatever the id of the scenario template)
-24. Remove args lines
+22. Change value on line 87 to "covid19" (or whatever the id of the scenario template)
+23. Remove args lines
 It should look like: 
 ~~~~
     botConnection.postActivity({
@@ -44,32 +43,33 @@ It should look like:
     }).subscribe(function(id) {});
 ~~~~ 
 
-25. Find website url on overview page of app service and Visit website.  (no restart required)
-25a.  Notice the text entry box at the bottom of your app?  If you don't like that then please add the following lines to index.js on the next line after the code you edited on above.
+24. Find website url on overview page of app service and Visit website.  (no restart required)
+##Style Customization
+25.  Notice the text entry box at the bottom of your app?  If you don't like that then please add the following lines to index.js add the following to styleOptions hashtable on line 29.  
 ~~~~
-   var shellInput = document.querySelector(".wc-console.has-upload-button");
-   shellInput.parentNode.removeChild(shellInput);
+  hideSendBox: true,
+  hideUploadButton: true
 ~~~~
 Final block will ook like:
 ~~~
-store.dispatch({
-     type: 'DIRECT_LINE/POST_ACTIVITY',
-     meta: {method: 'keyboard'},
-     payload: {
-        activity: {
-           type: "invoke",
-           name: "TriggerScenario",
-           value: {
-              trigger: "covid19",
-            }
-        }
-     }
-  });
-  var shellInput = document.querySelector(".wc-console.has-upload-button");
-  shellInput.parentNode.removeChild(shellInput);
+  const styleOptions = {
+        hideSendBox: true,
+        hideUploadButton: true
+        botAvatarImage: 'https://docs.microsoft.com/en-us/azure/bot-service/v4sdk/media/logo_bot.svg?view=azure-bot-service-4.0',
+        // botAvatarInitials: '',
+        // userAvatarImage: '',
+        userAvatarInitials: 'You'
+    }
+~~~
+You can find [additional style options here](https://bisser.io/bot-framework-v4-webchat-styling-options/)
+
+## Move this to another site
+26. Add the bot to your webstite using the steps [here](https://github.com/microsoft/HealthBot-WebChat)
+26a. a way you can do this is by dropping
+~~~
+<iframe src="<APP SERVICE URL>" height="height" width="width" />
 ~~~
 
-26. Add the bot to your webstite using the steps [here](https://github.com/microsoft/HealthBot-WebChat)
 27. Now customize the template
 
 ## Production Checklist
