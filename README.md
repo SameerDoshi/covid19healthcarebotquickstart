@@ -28,14 +28,14 @@ This view allows you to edit the scenario using either the visual interface or a
 18. Click save to save changes.
 19. Go to app service editor
 20. Edit wwwroot\public\index.js
-21. Replace contents of liens 83 and 96 with a space
-22. Change type on line 85 from "invoke" to "event"
-23. Change value on line 87 to "covid19" (id of the scenario template)
+21. Replace contents of liens 55 and 72 with a space
+22. You're almost done!
+23. Change value on line 87 to "covid19" (or whatever the id of the scenario template)
 24. Remove args lines
 It should look like: 
 ~~~~
     botConnection.postActivity({
-        type: "event",
+        type: "invoke",
         value: {
             trigger: "covid19",
         },
@@ -50,11 +50,38 @@ It should look like:
    var shellInput = document.querySelector(".wc-console.has-upload-button");
    shellInput.parentNode.removeChild(shellInput);
 ~~~~
+Final block will ook like:
+~~~
+store.dispatch({
+     type: 'DIRECT_LINE/POST_ACTIVITY',
+     meta: {method: 'keyboard'},
+     payload: {
+        activity: {
+           type: "invoke",
+           name: "TriggerScenario",
+           value: {
+              trigger: "covid19",
+            }
+        }
+     }
+  });
+  var shellInput = document.querySelector(".wc-console.has-upload-button");
+  shellInput.parentNode.removeChild(shellInput);
+~~~
 
 26. Add the bot to your webstite using the steps [here](https://github.com/microsoft/HealthBot-WebChat)
 27. Now customize the template
 
-
+## Production Checklist
+Before you go prod , some suggestions: 
+1 Add resource locks to prod RGs
+2 Crete dev environment and transition RBAC
+3 Crete dev bot and transition editors to dev bot
+4 Setup auto-scale rules
+5 Setup monitoring and alerting rules
+6 Enable backup
+7 (Ideal) Setup TM profile infront of app service or scale set
+8 Obtain SSL cert for TM CNAME
 
 NOTES THIS CODE-SAMPLE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. This sample is not supported under any Microsoft standard support program or service. The script is provided AS IS without warranty of any kind. Microsoft further disclaims all implied warranties including, without limitation, any implied warranties of merchantability or of fitness for a particular purpose. The entire risk arising out of the use or performance of the sample and documentation remains with you. In no event shall Microsoft, its authors, or anyone else involved in the creation, production, or delivery of the script be liable for any damages whatsoever (including, without limitation, damages for loss of business profits, business interruption, loss of business information, or other pecuniary loss) arising out of the use of or inability to use the sample or documentation, even if Microsoft has been advised of the possibility of such damages, rising out of the use of or inability to use the sample script, even if Microsoft has been advised of the possibility of such damages.
 
