@@ -83,5 +83,61 @@ Before you go prod , some suggestions:
 7 (Ideal) Setup TM profile infront of app service or scale set
 8 Obtain SSL cert for TM CNAME
 
+
+## Passing Username to bot
+If you secured your bot webchat using App Service Authentication you may want to pass that auth to the bot as a secario Arg.  No problem!
+
+### Edit server.js
+Find the following function:
+```
+app.post('/chatBot',  function(req, res) {
+```
+Edit 1:
+change:
+```
+var userid = req.query.userId || req.cookies.userid;
+```
+to
+```
+var userid = req.query.userId || req.headers['x-ms-client-principal-name']
+```
+
+Edit 2:
+Change:
+```
+response['userName'] = req.query.userName;
+```
+to
+```
+response['userName'] = userid;
+```
+
+### Edit index.js
+Now pass the username to the bot
+```
+triggeredScenario: {
+    trigger: "asfd",
+    args: {
+        username: user.name
+    }
+}
+```
+
+### Update the scenario tempalte
+To use this scenario argument use a statement block like:
+```
+scenario.scenarioArgs.username ?
+"I think your name is " + scenario.scenarioArgs.username + " but what do you want to call you?" :
+"What's your firstname?"
+```
+The above block of code is equivalent to:
+```
+if(scenario.scenarioArgs.username){
+    "I think your name is " + scenario.scenarioArgs.username + " but what do you want to call you?" 
+}else{
+    "What's your firstname?")
+}
+```
+
 NOTES THIS CODE-SAMPLE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. This sample is not supported under any Microsoft standard support program or service. The script is provided AS IS without warranty of any kind. Microsoft further disclaims all implied warranties including, without limitation, any implied warranties of merchantability or of fitness for a particular purpose. The entire risk arising out of the use or performance of the sample and documentation remains with you. In no event shall Microsoft, its authors, or anyone else involved in the creation, production, or delivery of the script be liable for any damages whatsoever (including, without limitation, damages for loss of business profits, business interruption, loss of business information, or other pecuniary loss) arising out of the use of or inability to use the sample or documentation, even if Microsoft has been advised of the possibility of such damages, rising out of the use of or inability to use the sample script, even if Microsoft has been advised of the possibility of such damages.
 
